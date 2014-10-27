@@ -1,0 +1,2 @@
+uklady_sterowania
+=================
