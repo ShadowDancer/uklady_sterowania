@@ -1,65 +1,71 @@
+// dane
 .DSEG
-.ORG 0x01FF // w tym miejscu pamieci zaczyna sie segment
+.ORG 0x01FF
 
-.EQU LEN = 0 // stala
- tab: .BYTE LEN // rozmiar 4 bajty
+.EQU LEN = 4 // dlugosc liczb
+ tab: .BYTE LEN
  tab1: .BYTE LEN
 
+ // kod
 .CSEG
-CLC
+CLC ; nie wiem po co to tu, ale bojê siê wykasowaæ
 
 ; Rejestr X, Y - adresy dodawanych bajtów
 ; Rejestr Z - ile dodawan jeszcze nalezy wykonac 
-; rejestr 18 - czy w ostatnim dodawaniu by³o ustawione carry
+; rejestr 18 - czy w ostatnim dodawaniu by³o ustawione carry (instrukcja sbiw modyfikuje carry)
 
-LDI ZL, LOW(LEN)    ; wczytuje do rejestru z dlugosc
-LDI ZH, HIGH(LEN)   ; cd
+; wczytuje dlugosc do rejestru
+LDI ZL, LOW(LEN)   
+LDI ZH, HIGH(LEN)
 
 ; konczenie programu dla dlugosci 0
-CPI  ZL, 0 ; porownaj nizszy bajt z 0, jesli jest rozny od zera to zacznij petle
+CPI  ZL, 0
 BRNE START
-CPI ZH, 0 ; j.w wyzszy bajt
+CPI ZH, 0
 BRNE START
-RJMP END ; jezeli LEN == 0 to zakoncz program
+RJMP END
 
-LDI R18, 0 ; w rejestrze bedzie przechowywana flaga carry po adc
+; wyzerowaniu rejestru przechowywujacego stan flagi carry
+LDI R18, 0
 
 START:
 
-; wczytywanie danych
-LDI XL, LOW(tab) // low - nizszy bajt
-LDI XH, HIGH(tab) // hih - wyzszy bajt
+; wczytywanie adresów danych
+LDI XL, LOW(tab)
+LDI XH, HIGH(tab)
 
-LDI YL, LOW(tab1) // low - nizszy bajt
-LDI YH, HIGH(tab1) // hih - wyzszy bajt
+LDI YL, LOW(tab1)
+LDI YH, HIGH(tab1)
 
+; dodawanie w ptli
 LOOP:
 
-CPI R18, 0 ; sprawdz, czy carry byla ustawiona w poprzednim dodawaniu
+; sprawdz, czy carry byla ustawiona w poprzednim dodawaniu
+CPI R18, 0 
 
-BRNE CARRY_SET; carry powinno byc ustawione
+BRNE CARRY_SET
 
-; carry powyno byc wyzerowane
+; jesli nie to wyzeruj
 CLC
 RJMP CARRY_AFTER_SET
 
+; ew. ustaw
 CARRY_SET:
 SEC
 
 CARRY_AFTER_SET:
 
-; zaladuj kolejne bajty
+; zaladuj bajty, ktore beda dodane
 LD R16, X+
 LD R17, Y
 
-ADC R17,R16 ; dodaj
-
-; zapisz wynik
-ST Y+, R17
+; dodaj
+ADC R17,R16 
 
 ; zapamietaj, czy carry bylo ustawione
 BRCC NOT_CARRY
 
+; w R18 1 - carry ustawione w ostatniej opeacji, 0 - nie ustawione
 LDI R18, 1
 RJMP AFTER_CARRY_MEM
 
@@ -68,10 +74,16 @@ LDI R18, 0
 
 AFTER_CARRY_MEM:
 
-SBIW Z, 1 ; zmniejszamy liczbe dodawan do wykonania
-BRBS 1, END ; jesli zostalo 0 dodwan do wykonania to skoncz
+; zapisz wynik
+ST Y+, R17
 
-RJMP LOOP ; jesli nie, to kontynuuj
+; zmniejszamy liczbe dodawan do wykonania
+SBIW Z, 1 
+BRBS 1, END ; jesli dodano wszystkie bajty skoncz program
+
+; jesli nie, to kontynuuj
+RJMP LOOP 
 	
+; koniec programu
 END: 
-RJMP END ; koniec programu
+RJMP END 
