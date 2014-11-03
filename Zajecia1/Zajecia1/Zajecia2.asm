@@ -9,7 +9,7 @@
 
 ; kod 
 .CSEG
-
+ 
 ; ustawianie wskaünika stosu
 LDI R16, HIGH(RAMEND)
 OUT SPH, R16
