@@ -14,7 +14,7 @@
     <AssemblyName>Zajecia1</AssemblyName>
     <Name>Zajecia1</Name>
     <RootNamespace>Zajecia1</RootNamespace>
-    <EntryFile>$(MSBuildProjectDirectory)\Zajecia1.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\Zajecia2.asm</EntryFile>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -69,6 +69,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Zajecia1.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zajecia2.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

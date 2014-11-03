@@ -1,4 +1,5 @@
-// dane
+; Przemys³aw Onak
+; dane
 .DSEG
 .ORG 0x01FF
 
@@ -6,39 +7,41 @@
  tab: .BYTE LEN
  tab1: .BYTE LEN
 
- // kod
+; kod 
 .CSEG
-CLC ; nie wiem po co to tu, ale bojê siê wykasowaæ
 
-; ustaw stos
-LDI R16, high(RAMEND) ; Main program start
-OUT SPH, r16 ; Set Stack Pointer to top of RAM
-LDI R16, low(RAMEND)
-OUT SPL, r16
+; ustawianie wskaŸnika stosu
+LDI R16, HIGH(RAMEND)
+OUT SPH, R16
+LDI R16, LOW(RAMEND)
+OUT SPL, R16
 
-LDI R16, 16
-LDI R17, 17
-LDI R18, 18
+; wczytywanie przyk³adowych wartoœci do rejestrów roboczych funkcji
+LDI R16, 0x16
+LDI R17, 0x17
+LDI R18, 0x18
 
-; wczytaj adresy liczb
+; wczytaj adresy liczb (dane)
 LDI XL, LOW(tab)
 LDI XH, HIGH(tab)
-
 LDI YL, LOW(tab1)
 LDI YH, HIGH(tab1)
 
-; wczytuje dlugosc do rejestru
-LDI ZL, LOW(LEN)   
+; wczytaj d³ugoœæ liczby (dane)
+LDI ZL, LOW(LEN)  
 LDI ZH, HIGH(LEN)
 
+; wywo³aj procedurê (dane znajduj¹ siê w rejestrach X, Y, Z)
 CALL DODAJ
 
+; koniec programu
 END:
 RJMP END
 
-
+; dodawanie dwóch liczb
 DODAJ:
 
+; zapisuje rejestry na stos
 PUSH R18
 PUSH R17
 PUSH R16
@@ -98,12 +101,10 @@ RJMP LOOP
 
 DODAJ_END:
 	
+; przywroc rejestry ze stosu
 POP R16
 POP R17
 POP R18
 
+; koniec procedury
 RET
-
-
-IRQ:
-	RETI
