@@ -3,6 +3,8 @@
 
 #include "Library.h"
 
+// kod do testowania bibiloteki
+
 void Led1(void* Params)
 {
 	int y = 0;
