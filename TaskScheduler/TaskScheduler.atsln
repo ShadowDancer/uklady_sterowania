@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "TaskScheduler", "AVR1886\TaskScheduler.cproj", "{9A90AF8C-41C2-4058-A586-D875162F4610}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A90AF8C-41C2-4058-A586-D875162F4610}.Debug|AVR.ActiveCfg = Debug|AVR
+		{9A90AF8C-41C2-4058-A586-D875162F4610}.Debug|AVR.Build.0 = Debug|AVR
+		{9A90AF8C-41C2-4058-A586-D875162F4610}.Release|AVR.ActiveCfg = Release|AVR
+		{9A90AF8C-41C2-4058-A586-D875162F4610}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

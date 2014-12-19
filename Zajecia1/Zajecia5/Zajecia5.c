@@ -43,6 +43,7 @@ void Work()
 	PORTC = display; // wybór wyœwietlacza
 	PORTD = number; // wybór segmentów
 }
+
 // co 1 ms
 ISR(TIMER0_COMP_vect)
 {
